@@ -35,18 +35,18 @@ Steps to follow:
 ## Step 2 : To start the payment use step 2 or step 3 on app Scaffold for the payment webview and call back will return the needful information.
 
 
-    Widget startPayment({
-        required BuildContext context,
-        required double amount,
-        required String currency,
-        required Function(bool success, String? transactionId) onPaymentResult,
-        }) {
-            final paymentUrl = instance.configMemoryHolder.paymentUrl;
-            return PayOrcWebView(
-            paymentUrl: paymentUrl!,
-            onPaymentResult: onPaymentResult,
-        );
-    }
+    FlutterPayOrc.instance.startPayment(
+            context: context,
+            amount: 2.00,
+            currency: "Rupees",
+            onPaymentResult: (success, transactionId) {
+              if (success) {
+                print('Payment successful. Transaction ID: $transactionId');
+              } else {
+                print('Payment failed.');
+              }
+            },
+      )
 
 ## Step 3 : To start the payment use step 2 or step 3 on app Scaffold for the payment webview and call back will return the needful information.
 
