@@ -23,8 +23,8 @@ Steps to follow:
 
 ## Step 1 : In your app, specify the environment during initialization.
 
-void main() { 
-
+ 
+void main() {
     FlutterPayOrc.initialize(
         clientId: 'your-client-id',
         merchantId: 'your-merchant-id',
