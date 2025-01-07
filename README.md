@@ -23,42 +23,41 @@ Steps to follow:
 
 ## Step 1 : In your app, specify the environment during initialization.
 
-void main() {
-
-    FlutterPayOrc.initialize(
-        clientId: 'your-client-id',
-        merchantId: 'your-merchant-id',
-        environment: Environment.development, // Switch to Environment.production for live
-    );
-    
-    runApp(const MyApp());
-}
+    void main() {        
+        FlutterPayOrc.initialize(
+            clientId: 'your-client-id', // updated your client id.
+            merchantId: 'your-merchant-id', // updated your merchant id.
+            environment: Environment.development, // Switch to Environment.production for live.
+        );    
+        runApp(const MyApp());
+    }
 
 ## Step 2 : To start the payment use step 2 or step 3 on app Scaffold for the payment webview and call back will return the needful information.
 
-FlutterPayOrc.instance.startPayment(
-  context: context,
-  amount: 2.00,
-  currency: "Rupees",
-  onPaymentResult: (success, transactionId) {
-    if (success) {
-      print('Payment successful. Transaction ID: $transactionId');
-    } else {
-      print('Payment failed.');
+
+    Widget startPayment({
+        required BuildContext context,
+        required double amount,
+        required String currency,
+        required Function(bool success, String? transactionId) onPaymentResult,
+        }) {
+            final paymentUrl = instance.configMemoryHolder.paymentUrl;
+            return PayOrcWebView(
+            paymentUrl: paymentUrl!,
+            onPaymentResult: onPaymentResult,
+        );
     }
-  },
-);
 
 ## Step 3 : To start the payment use step 2 or step 3 on app Scaffold for the payment webview and call back will return the needful information.
 
-PayOrcWebView(
-    paymentUrl: FlutterPayOrc.instance.configMemoryHolder.paymentUrl!,
-    onPaymentResult: (success, transactionId) {
-        if (success) {
-            print('Payment successful. Transaction ID: $transactionId');
-        } else {
-            print('Payment failed.');
-        }
-    },
-);
+    PayOrcWebView(
+        paymentUrl: FlutterPayOrc.instance.configMemoryHolder.paymentUrl!,
+        onPaymentResult: (success, transactionId) {
+            if (success) {
+                print('Payment successful. Transaction ID: $transactionId');
+            } else {
+                print('Payment failed.');
+            }
+        },
+    );
 
